@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+
+  --color-brand-red: #e01c1c;
+  --color-brand-red-bright: #ff2020;
+  --color-brand-red-dark: #9e1313;
+  
+  --color-dark-1: #0a0a0a;
+  --color-dark-2: #111111;
+  --color-dark-3: #1a1a1a;
+  --color-dark-4: #222222;
+  --color-dark-5: #2d2d2d;
+}
+
+@layer base {
+  body {
+    @apply bg-dark-1 text-gray-200 min-h-screen antialiased overflow-x-hidden relative;
+  }
+  
+  /* Animated noise grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* Grid overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(224, 28, 28, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(224, 28, 28, 0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@layer utilities {
+  .text-glow-red {
+    text-shadow: 0 0 20px rgba(224, 28, 28, 0.5);
+  }
+  .bg-grad-hero {
+    background: linear-gradient(135deg, #200000 0%, #0a0a0a 50%, #1a0000 100%);
+  }
+}
+
+/* Animations that are hard to do with standard tailwind */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.5s ease both;
+}
+.animate-fade-up-1 {
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+.animate-fade-up-2 {
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+.animate-fade-up-3 {
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes blink { 
+  0%,100% { opacity: 1; } 
+  50% { opacity: 0.3; } 
+}
+.animate-pulse-ring {
+  animation: pulseRing 1.5s ease-out infinite;
+}
+.animate-blink {
+  animation: blink 1s ease infinite;
+}
